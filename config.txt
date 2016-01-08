@@ -1,0 +1,59 @@
+#### File Path #####
+file_path=/home/fuyao/FunSeq_PCAWG/data_context
+
+#### 1000G SNP file ####
+tgp_snp=1kg.phase1.snp.bed.gz
+
+#### GERP file ####
+gerp_file=All_hg19_RS.bw
+
+#### Sensitive region ####
+sensitive=sensitive.nc.bed
+
+#### Ultra conserved region ####
+conserved=ultra.conserved.hg19.bed
+
+#### Genome annotations ####
+encode_annotation=ENCODE.annotation.gz
+
+#### Bound motif file ####
+bound_motif=ENCODE.tf.bound.union.bed.gz
+
+#### HOT region file (highly occupied regions) ####
+hot_file=hot_region.bed
+
+#### Enhancer-gene pairs #####
+enhancer=drm.gene.bed
+
+#### Motif PWM file ####
+motif_pfm=motif.PFM
+
+#### Motif score file ####
+score_file=motif.score.cut
+
+#### Network file path ####
+network_dir=networks
+
+#### Regulatory network ####
+reg_net=regulatory.network
+
+#### Gencode file path ####
+gencode=gencode
+
+#### Reference genome sequence ####
+reference_file=reference_genome.fa
+ 
+#### Ancestral genome sequence ####
+ancestral_file=human_ancestor_GRCh37_e59.fa
+
+#### Gene list path ####
+gene_info_dir=gene_lists
+
+#### Recurrence database ####
+cancer_dir=cancer_recurrence
+
+#### Gene selection file ####
+selection=GENE.strong_selection.txt
+
+#### Weighted scoring scheme ####
+weight_file=weighted.score.txt
