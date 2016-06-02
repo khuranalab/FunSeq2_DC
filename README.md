@@ -1,8 +1,9 @@
 # FunSeq_PCAWG
 a modified version of funseq2 for PCAWG project
 
-Pre-built data context used from orginal Funseq2
- * http://funseq2.gersteinlab.org/data/2.1.2
+Pre-built data context sources
+ 1. used by FunSeq_PCAWG
+ 2. used by FunSeq2 publication 
 
 ##### FunSeq modifications:
 1. Map current terms to sequence ontology terms
