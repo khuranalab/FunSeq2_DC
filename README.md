@@ -2,7 +2,7 @@
 a modified version of funseq2 for PCAWG project
 
 Pre-built data context sources
- 1. used by FunSeq_PCAWG
+ 1. used by [ FunSeq_PCAWG ] (http://khuranalab.med.cornell.edu/data.html)
  2. used by FunSeq2 publication 
 
 ##### FunSeq modifications:
@@ -16,3 +16,4 @@ Pre-built data context sources
  
 4. Do not remove germline
   * MAF=1
+
