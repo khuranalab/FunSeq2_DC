@@ -1,4 +1,4 @@
-# FunSeq2_DC2
+# FunSeq2 with data context version 2
 a modified version of data context for funseq2 at PCAWG project
 
 Pre-built data context sources
