@@ -1,11 +1,11 @@
-# FunSeq_PCAWG
-a modified version of funseq2 for PCAWG project
+# FunSeq2_DC2
+a modified version of data context for funseq2 at PCAWG project
 
 Pre-built data context sources
- 1. used by [ FunSeq_PCAWG ] (http://khuranalab.med.cornell.edu/data.html)
+ 1. used by [ FunSeq2_DC2 ] (http://khuranalab.med.cornell.edu/data.html)
  2. used by FunSeq2 publication 
 
-##### FunSeq modifications:
+##### FunSeq2 modifications:
 1. Map current terms to sequence ontology terms
   * splice_variant means either splice_donor or splice_receptor
  
