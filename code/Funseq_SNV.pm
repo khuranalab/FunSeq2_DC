@@ -489,13 +489,16 @@ sub motif_gain{
 	# retrieve + & - 29bp around the SNP & gain of motif calculation; 
 	
 	foreach $id(sort keys %{$self->{NGENE}}){
-		my $switch = 0;
-		foreach my $gene(keys %{$self -> {NGENE}->{$id}}){
-			if (defined $self ->{NGENE} ->{$id} ->{$gene} -> {"Promoter"} || defined $self ->{NGENE}->{$id}->{$gene}->{"Distal"}){
-				$switch = 1;
-			}
-		}
-		if ($switch == 1){
+		######
+		# comment out the limitation for MOTIFG annotation on the promoter or enhancer regions only 
+		######
+		# my $switch = 0;
+		# foreach my $gene(keys %{$self -> {NGENE}->{$id}}){
+		#	if (defined $self ->{NGENE} ->{$id} ->{$gene} -> {"Promoter"} || defined $self ->{NGENE}->{$id}->{$gene}->{"Distal"}){
+		#		$switch = 1;
+		#	}
+		# }
+		# if ($switch == 1){
 			@des = split /\s+/,$self->{DES}->{$id};
 			push @id,$id;
 			$chr = $des[0];
@@ -505,7 +508,7 @@ sub motif_gain{
 			push @ref,uc($des[3]);
 			push @alt,uc($des[4]);
 			push @start,$start;
-		}
+		# }
 	}
 
 	open(O,">$out_tmp")||die;
