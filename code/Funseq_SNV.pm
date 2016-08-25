@@ -488,10 +488,10 @@ sub motif_gain{
 	
 	# retrieve + & - 29bp around the SNP & gain of motif calculation; 
 	
-	foreach $id(sort keys %{$self->{GENE}}){
+	foreach $id(sort keys %{$self->{NGENE}}){
 		my $switch = 0;
-		foreach my $gene(keys %{$self -> {GENE}->{$id}}){
-			if (defined $self ->{GENE} ->{$id} ->{$gene} -> {"Promoter"} || defined $self ->{GENE}->{$id}->{$gene}->{"Distal"}){
+		foreach my $gene(keys %{$self -> {NGENE}->{$id}}){
+			if (defined $self ->{NGENE} ->{$id} ->{$gene} -> {"Promoter"} || defined $self ->{NGENE}->{$id}->{$gene}->{"Distal"}){
 				$switch = 1;
 			}
 		}
@@ -774,7 +774,7 @@ sub gene_link{
 			my $id = join("\t",@tmp[0,1]);
 			my $gene = $tmp[8];
 			
-			$self->{GENE}->{$id}->{$gene}->{$tag}=1;
+			$self->{NGENE}->{$id}->{$gene}->{$tag}=1;
 			
 			if ($tag eq "Promoter" && scalar @tmp > 11){
 				$self -> {LINK} -> {$id} -> {$gene} -> {$tag} -> {$tmp[10]} =1;
@@ -1121,8 +1121,8 @@ exit;
 				$tmp_score =~ s/value/$self->{GERP}->{$id}/;	
 				$score +=eval($tmp_score);
     		}
-    		if (defined $self ->{GENE} -> {$id} && (defined $self ->{HUB} -> {$id}) != 1 && (defined $self ->{MOTIFG}->{$id}) !=1){
-    			$score += $weight{GENE};
+    		if (defined $self ->{NGENE} -> {$id} && (defined $self ->{HUB} -> {$id}) != 1 && (defined $self ->{MOTIFG}->{$id}) !=1){
+    			$score += $weight{NGENE};
     		}
 			if (defined $self ->{HUB} ->{$id}){
 				my $tmp_score = $weight{HUB};
@@ -1177,7 +1177,7 @@ exit;
 			if (defined $self -> {MOTIFG}->{$id}){
 				$score ++;
 			}
-			if (defined $self -> {GENE} -> {$id}){
+			if (defined $self -> {NGENE} -> {$id}){
 				$score ++;
 			}
 			$nc_score{$score}{$id} = 1;
@@ -1210,7 +1210,8 @@ exit;
     			print OUT $self -> {VAT} ->{$id},";";
     			
     			if (defined $self ->{HUB} ->{$id}){
-    				print OUT $self ->{HUB} ->{$id},";";
+    				#print OUT "HUB=",join(",", sort keys %{$self -> {HUB} -> {$id}}),";";
+                                print OUT $self ->{HUB} ->{$id},";";
     			}else{
     				print OUT ".;";
     			}
@@ -1328,12 +1329,12 @@ exit;
     				print OUT ".;";
     			}
     			
-    			if (defined $self -> {GENE} -> {$id}){
+    			if (defined $self -> {NGENE} -> {$id}){
     				my $gene_info = "";
-    				foreach my $gene (sort keys %{$self -> {GENE} -> {$id}}){
+    				foreach my $gene (sort keys %{$self -> {NGENE} -> {$id}}){
     					
     					my $info = "$gene(";
-						foreach my $tag (sort keys %{$self -> {GENE} -> {$id}->{$gene}}){
+						foreach my $tag (sort keys %{$self -> {NGENE} -> {$id}->{$gene}}){
 							if (defined $self -> {LINK} ->{$id} && defined $self -> {LINK} ->{$id} -> {$gene} && defined $self -> {LINK} ->{$id} ->{$gene} -> {$tag}){
 								$info = $info.$tag.'['.join(',',sort keys %{$self -> {LINK} ->{$id} ->{$gene} -> {$tag}}).']&';
 							}else{
@@ -1384,6 +1385,7 @@ exit;
     			print OUT "CDS=Yes",";";
     			print OUT $self -> {VAT} -> {$id},";";
     			if (defined $self -> {HUB}->{$id}){
+                                #print OUT "HUB=",join(",", sort keys %{$self -> {HUB} -> {$id}}),";";
     				print OUT "HUB=",$self -> {HUB}->{$id},";";
     			}
     			if (defined $self -> {SELECTION} -> {$id}){
@@ -1457,13 +1459,13 @@ exit;
     			if (defined $self ->{CONS} ->{$id}){
     				print OUT "UCONS=Yes;";
     			}
-    			if (defined $self ->{GENE}->{$id}){    				
+    			if (defined $self ->{NGENE}->{$id}){    				
     				my $gene_info = "";
     				my $info = "";
-    				foreach my $gene (sort keys %{$self -> {GENE} -> {$id}}){
+    				foreach my $gene (sort keys %{$self -> {NGENE} -> {$id}}){
     				
     				    $info = $info."$gene(";
-						foreach my $tag (sort keys %{$self -> {GENE} -> {$id}->{$gene}}){
+						foreach my $tag (sort keys %{$self -> {NGENE} -> {$id}->{$gene}}){
 							if (defined $self -> {LINK} ->{$id} && defined $self -> {LINK} ->{$id} -> {$gene} && defined $self -> {LINK} ->{$id} ->{$gene} -> {$tag}){
 								$info = $info.$tag.'['.join(',',sort keys %{$self -> {LINK} ->{$id} ->{$gene} -> {$tag}}).']&';
 							}else{
