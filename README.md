@@ -6,14 +6,18 @@ Pre-built data context sources
  2. used by FunSeq2 publication 
 
 ##### FunSeq2 modifications:
-1. Map current terms to sequence ontology terms
+6. Remove restriction of motif gain on promoters and enhancers only.  
+
+5. Fix new spliceOverlap annotations from VAT
+
+4. Map current terms to sequence ontology terms
   * splice_variant means either splice_donor or splice_receptor
  
-2. Change enhancer annotations to include tissue-specificity
+3. Change enhancer annotations to include tissue-specificity
   * code is modified to incorporate specific format.
  
-3. Remove hierarchy and annotate all
+2. Remove hierarchy and annotate all
  
-4. Do not remove germline
+1. Do not remove germline
   * MAF=1
 
