@@ -6,7 +6,7 @@ Pre-built data context sources
  2. used by FunSeq2 publication 
 
 ##### FunSeq2 modifications:
-5. Fix new spliceOverlap annotations from VAT 
+5. Fix new spliceOverlap annotations from VAT
 
 4. Map current terms to sequence ontology terms
   * splice_variant means either splice_donor or splice_receptor
