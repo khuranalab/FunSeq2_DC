@@ -1,8 +1,8 @@
-# FunSeq2_DC2
+# FunSeq2 with data context version 2
 a modified version of data context for funseq2 at PCAWG project
 
 Pre-built data context sources
- 1. used by [ FunSeq2_DC2 ] (http://khuranalab.med.cornell.edu/data.html)
+ 1. used by [ FunSeq2_DC version 2 ] (http://khuranalab.med.cornell.edu/data.html)
  2. used by FunSeq2 publication 
 
 ##### FunSeq2 modifications:
