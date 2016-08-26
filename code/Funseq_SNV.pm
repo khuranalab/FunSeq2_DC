@@ -1312,6 +1312,10 @@ exit;
     			print OUT $self -> {GERP} -> {$id},";";
     			print OUT "No;.;";
 
+    			if (defined $self -> {VAT} -> {$id}){
+    				print OUT $self -> {VAT} -> {$id},";";
+				}
+
     			if (defined $self -> {NHUB} -> {$id}){
     				print OUT join(",",sort keys %{$self -> {NHUB} -> {$id}}),";";
     			}else{
@@ -1475,6 +1479,10 @@ exit;
     			print OUT "GERP=",$self -> {GERP}->{$id},";";
     			
     			print OUT "CDS=No;";
+    			
+    			if (defined $self -> {VAT} -> {$id}){
+    				print OUT $self -> {VAT} -> {$id},";";
+				}
 
     			if (defined $self -> {NHUB} -> {$id}){
     				print OUT "NHUB=",join(",", sort keys %{$self -> {NHUB} -> {$id}}),";";
