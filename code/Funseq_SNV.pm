@@ -160,6 +160,11 @@ sub snv_filter{
 	`sed 's/^chr//gI' $input | sed -e '/^#/! s/^/chr/' > $tmp_file`;
 	
 	if ($maf_cut_off != 1){
+
+		##
+		# use tabix to get subset of variants from input that overlap with 1KG.genome file
+		# minor allel frequency is between [1,0], thus, mat_cut_off=0 is removing all 1KG variants, mat_cut_off=1 is keeping all 1KG variants     
+		##
 		@snp_tabix = split /\n/, `tabix $polymorphism -B $tmp_file| awk '{FS="\t";OFS="\t"} \$4 >= $maf_cut_off'`;
 		foreach $snp (@snp_tabix){
 			$id = join("\t",(split /\t/,$snp)[0,1]);
@@ -1027,11 +1032,13 @@ exit;
  	
  	&read_nc($nc_snp);
 	&read_cds($coding_info);
+
 	if ($weight_mode ==1){
 		&nc_score_scheme();
 	}else{
 		&nc_score_scheme_uw();
 	}
+
 	&rank_output($output_format);
  
  
@@ -1063,22 +1070,31 @@ exit;
 			my $score = 0;
 			$self -> {VAT} ->{$id}= $vat;
 			$self ->{GENE} -> {$id} = $tmp[3];
-			if (/nonsynonymous/ || /prematureStop/){
+
+			# add spliceOverlap into CDS scoring scheme
+			if (/nonsynonymous/ || /prematureStop/ || /spliceOverlap/){
+			#if (/nonsynonymous/ || /prematureStop/){
 				$score ++;
-				if (/prematureStop/){
+				
+				if (/prematureStop/ || /spliceOverlap/){
+				#if (/prematureStop/){
 					$score ++;
 				}
+
 				if ($tmp[4] ne "."){
 					$self -> {HUB} ->{$id} = $tmp[4];
 					$score ++;
 				}
+
 				if (/NegativeSelection/){
 					$self -> {SELECTION} ->{$id} = 1;
 					$score ++;
-				}	
+				}
+
 				if (defined $self ->{CONS} ->{$id}){
     				$score++;
     			}
+
     			if ($self ->{GERP} -> {$id} ne "." && $self ->{GERP} ->{$id} > 2){
     				$score++;    # gerp greater than 2
     			}
@@ -1102,6 +1118,7 @@ exit;
 			if (defined $self->{ANNO}->{$id} && (defined $self -> {SEN}->{$id})!=1 && (defined $self -> {MOTIFBR}->{$id})!=1 && (defined $self -> {HOT}->{$id})!=1){
 				$score = $weight{ANNO};
 			}
+
 			if (defined $self -> {USEN} ->{$id}){
 				$score = $weight{USEN};
 			}elsif (defined $self -> {SEN} -> {$id}){
@@ -1113,6 +1130,7 @@ exit;
 				$tmp_score =~ s/value/$self->{BR_PROB}->{$id}/;	
 				$score +=eval($tmp_score);	
 			}
+
 			if (defined $self -> {HOT} -> {$id}){
     			$score += $weight{HOT};
 			}
@@ -1124,14 +1142,17 @@ exit;
 				$tmp_score =~ s/value/$self->{GERP}->{$id}/;	
 				$score +=eval($tmp_score);
     		}
+
     		if (defined $self ->{NGENE} -> {$id} && (defined $self ->{HUB} -> {$id}) != 1 && (defined $self ->{MOTIFG}->{$id}) !=1){
     			$score += $weight{NGENE};
     		}
+
 			if (defined $self ->{HUB} ->{$id}){
 				my $tmp_score = $weight{HUB};
 				$tmp_score =~ s/value/$self->{NET_PROB}->{$id}/;	
 				$score +=eval($tmp_score);
 			}
+
 			if (defined $self -> {MOTIFG}->{$id}){
 				if ($self->{G_PROB}->{$id} < (log(20.25)-log(0.25))){
 					my $tmp_score = $weight{MOTIFG};
@@ -1201,7 +1222,7 @@ exit;
 	
 	
 	sub print_bed_format{
-		# * Coding ***
+		# * Coding bed format ***
 		
 		my $score;
 		my $id;
@@ -1218,6 +1239,7 @@ exit;
     			}else{
     				print OUT ".;";
     			}
+
     			if (defined $self ->{SELECTION} ->{$id}){
     				print OUT "Yes;";
     			}else{
@@ -1230,6 +1252,7 @@ exit;
     			}else{
     				print OUT ".;";
     			}
+
     			if (defined $self -> {HOT} ->{$id}){
     				print OUT join(",",sort keys %{$self ->{HOT} -> {$id}}),";";
     			}else{
@@ -1250,6 +1273,7 @@ exit;
     			}else{
     				print OUT ".;";
     			}
+
     			print OUT ".;"x2;
     			
     			if (defined $self ->{CONS} ->{$id}){
@@ -1257,12 +1281,15 @@ exit;
     			}else{
     				print OUT ".;";
     			}
+
     			my $gene = $self -> {GENE} -> {$id};
+    			
     			if (defined $gene_info{$gene}){
     				print OUT $gene,join("",sort keys %{$gene_info{$gene}}),";";
     			}else{
     				print OUT $gene,";";
     			}
+
     			if (defined $self -> {USER}){
     				if (defined $self ->{USER} ->{$id}){
     					print OUT join(",",sort keys %{$self ->{USER}->{$id}}),";";
@@ -1270,12 +1297,13 @@ exit;
     					print OUT ".;";
     				}
     			}
+
     			print OUT $score,";";
     			print OUT ".\n";
     		}
     	}
    
-    	# * Non-coding **** 
+    	# * Non-coding bed format **** 
     
     	foreach $score (sort {$b<=>$a} keys %nc_score){
     		foreach $id (sort keys %{$nc_score{$score}}){
@@ -1288,6 +1316,7 @@ exit;
     			}else{
     				print OUT ".;";
     			}
+
     			print OUT ".;";   # negative selection
     		
     			if (defined $self -> {ANNO} -> {$id}){
@@ -1295,6 +1324,7 @@ exit;
     			}else{
     				print OUT ".;";
     			}
+
     			if (defined $self -> {HOT} ->{$id}){
     				print OUT join(",",sort keys %{$self ->{HOT} -> {$id}}),";";
     			}else{
@@ -1321,11 +1351,13 @@ exit;
     			}else{
     				print OUT ".;";
     			}
+
     			if (defined $self -> {USEN} -> {$id}){
     				print OUT "Yes;";
     			}else{
     				print OUT ".;";
     			}
+
     			if (defined $self ->{CONS} ->{$id}){
     				print OUT "Yes;";
     			}else{
@@ -1357,6 +1389,7 @@ exit;
     			}else{
     				print OUT ".;";
     			}
+
     			if (defined $self -> {USER}){
     				if (defined $self ->{USER} ->{$id}){
     					print OUT join(",",sort keys %{$self ->{USER}->{$id}}),";";
@@ -1364,6 +1397,7 @@ exit;
     					print OUT ".;";
     				}
     			}
+
     			print OUT ".;";
     			print OUT $score,"\n";
     		}
@@ -1371,9 +1405,10 @@ exit;
 	}
 
 	sub print_vcf_format{
-	# * Coding **** 
+	# * Coding vcf format **** 
 		my $score;
 		my $id;
+
     	foreach $score (sort {$b<=>$a} keys %cds_score){
     		foreach $id (sort keys %{$cds_score{$score}}){
     			if (defined $self -> {VCF} ->{$id}){
@@ -1424,7 +1459,7 @@ exit;
     	}
     
    
-    	# *  Non-coding **** 
+    	# *  Non-coding vcf format **** 
     
     	foreach $score (sort {$b<=>$a} keys %nc_score){
     		foreach $id (sort keys %{$nc_score{$score}}){
@@ -1434,34 +1469,44 @@ exit;
     				my @tmp = split /\t+/,$self -> {DES} ->{$id};
     				print OUT $tmp[0],"\t",$tmp[2],"\t.\t",$tmp[3],"\t",$tmp[4],"\t",".\t.\t";
     			}
+
     			print OUT "SAMPLE=$sample;";
     			print OUT "GERP=",$self -> {GERP}->{$id},";";
     			
     			print OUT "CDS=No;";
+
     			if (defined $self -> {HUB} -> {$id}){
     				print OUT "HUB=",join(",", sort keys %{$self -> {HUB} -> {$id}}),";";
     			}
+
     			if (defined $self -> {ANNO} -> {$id}){
     				print OUT "NCENC=",join(",", sort keys %{$self -> {ANNO}->{$id}}),";";
     			}
+
     			if (defined $self -> {HOT} ->{$id}){
     				print OUT "HOT=",join(",",sort keys %{$self -> {HOT} ->{$id}}),";";
     			}
+
     			if (defined $self ->{MOTIFBR} ->{$id}){
     				print OUT "MOTIFBR=",$self ->{MOTIFBR}->{$id},";";
     			}
+
     			if (defined $self ->{MOTIFG} ->{$id}){
     				print OUT "MOTIFG=",$self ->{MOTIFG}->{$id},";";
     			}
+
     			if (defined $self ->{SEN}->{$id}){
     				print OUT "SEN=Yes;";
     			}
+
     			if (defined $self ->{USEN}->{$id}){
     				print OUT "USEN=Yes;";
     			}
+
     			if (defined $self ->{CONS} ->{$id}){
     				print OUT "UCONS=Yes;";
     			}
+
     			if (defined $self ->{NGENE}->{$id}){    				
     				my $gene_info = "";
     				my $info = "";
@@ -1485,13 +1530,16 @@ exit;
     				$info =~ s/,+$//;
     				print OUT "GENE=$info;";
     				$gene_info =~ s/,+$//;
+
     				if ($gene_info ne ""){
     					print OUT "CANG=$gene_info;";
     				}
     			}
+
     			if (defined $self -> {USER} && defined $self ->{USER} ->{$id}){
     					print OUT "USER_ANNO=",join(",",sort keys %{$self ->{USER}->{$id}}),";";
     			}
+
     			print OUT "NCDS=",$score,"\n";
     		}
     	}
@@ -1902,7 +1950,11 @@ EOF
 			}
 		}
 	}else{
+
+		## re-processing VCF output with cancer gene and db recurrence annotation
+
 		print OUT $vcf_header;
+
 		while(<IN>){
 			@temp = split /\s+/,$_;
 			$id = join(":",$temp[0],$temp[1]);
@@ -1937,19 +1989,23 @@ EOF
 					
 					if (defined $recur_elm{$anno}){							
 						s/;CDSS=\d+$//g;
-						print OUT $_,";CDSS=",$score+1,";RECUR=",$recur_elm{$anno},"$db_recur\n";
+						#print OUT $_,";CDSS=",$score+1,";RECUR=",$recur_elm{$anno},"$db_recur\n";
+						print OUT $_,";CDSS=",$score,':',$score+1,";RECUR=",$recur_elm{$anno},"$db_recur\n";
+						
 						if (/missense_variant/ || /stop_gained/){
 							print DRIVER $_,";CDSS=",$score+1,";RECUR=Yes$recur_cancer\n";
 						}
 						
 					}elsif(scalar @db_recur >0 && $recur_db_score ==1){
 						s/;CDSS=\d+$//g;
-						print OUT $_,";CDSS=",$score+1,"$db_recur\n";
+						#print OUT $_,";CDSS=",$score+1,"$db_recur\n";
+						print OUT $_,";CDSS=",$score,':',$score+1,"$db_recur\n";
 						if (/missense_variant/ || /stop_gained/){
 							print DRIVER $_,";CDSS=",$score+1,";$recur_cancer\n";
 						}
 					}else{
 						print OUT $_,"$db_recur\n";
+						
 						if (/missense_variant/ || /stop_gained/){
 							print DRIVER $_,"$recur_cancer\n";
 						}
