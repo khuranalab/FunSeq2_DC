@@ -335,6 +335,7 @@ EOF
 
 
 	$input_file_new = `intersectBed -a $bound_motif -b $input_file -wo | sort -k 1,1 -k 2,2n |uniq | awk '{OFS="\t"}{print \$8,\$9,\$10,\$11,\$12,\$1,\$2,\$3,\$4,\$5,\$6,\$7}'`;
+	
 	if ($mode == 2){
 		my @line = split /\n+/, `printf "$input_file_new" | awk '{FS="\t";OFS="\t"}{gsub("chr","",\$1); print \$1,\$2,\$3}' | fastaFromBed -fi $ancestral_file -bed stdin -fo stdout`;
 		foreach my $line (@line){
@@ -805,7 +806,7 @@ sub gene_link{
 					}
 				}
 				my $tmp_hub = $gene.":".join('',@prob_gene);
-				$self->{HUB} -> {$id} -> {$tmp_hub}=1;
+				$self->{NHUB} -> {$id} -> {$tmp_hub}=1;
 			}
 		}
 	}
@@ -1143,12 +1144,12 @@ exit;
 				$score +=eval($tmp_score);
     		}
 
-    		if (defined $self ->{NGENE} -> {$id} && (defined $self ->{HUB} -> {$id}) != 1 && (defined $self ->{MOTIFG}->{$id}) !=1){
+    		if (defined $self ->{NGENE} -> {$id} && (defined $self ->{NHUB} -> {$id}) != 1 && (defined $self ->{MOTIFG}->{$id}) !=1){
     			$score += $weight{NGENE};
     		}
 
-			if (defined $self ->{HUB} ->{$id}){
-				my $tmp_score = $weight{HUB};
+			if (defined $self ->{NHUB} ->{$id}){
+				my $tmp_score = $weight{NHUB};
 				$tmp_score =~ s/value/$self->{NET_PROB}->{$id}/;	
 				$score +=eval($tmp_score);
 			}
@@ -1190,7 +1191,7 @@ exit;
     		if (defined $self -> {HOT} -> {$id}){
     			$score ++;
 			}
-			if (defined $self ->{HUB} ->{$id}){
+			if (defined $self ->{NHUB} ->{$id}){
 				if ($self ->{NET_PROB} -> {$id} > 0.75){
 					$score ++;
 				}
@@ -1311,8 +1312,8 @@ exit;
     			print OUT $self -> {GERP} -> {$id},";";
     			print OUT "No;.;";
 
-    			if (defined $self -> {HUB} -> {$id}){
-    				print OUT join(",",sort keys %{$self -> {HUB} -> {$id}}),";";
+    			if (defined $self -> {NHUB} -> {$id}){
+    				print OUT join(",",sort keys %{$self -> {NHUB} -> {$id}}),";";
     			}else{
     				print OUT ".;";
     			}
@@ -1475,8 +1476,8 @@ exit;
     			
     			print OUT "CDS=No;";
 
-    			if (defined $self -> {HUB} -> {$id}){
-    				print OUT "HUB=",join(",", sort keys %{$self -> {HUB} -> {$id}}),";";
+    			if (defined $self -> {NHUB} -> {$id}){
+    				print OUT "NHUB=",join(",", sort keys %{$self -> {NHUB} -> {$id}}),";";
     			}
 
     			if (defined $self -> {ANNO} -> {$id}){
