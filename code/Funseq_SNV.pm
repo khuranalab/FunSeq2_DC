@@ -1485,7 +1485,7 @@ exit;
 				}
 
     			if (defined $self -> {NHUB} -> {$id}){
-    				print OUT "NHUB=",join(",", sort keys %{$self -> {NHUB} -> {$id}}),";";
+    				print OUT "HUB=",join(",", sort keys %{$self -> {NHUB} -> {$id}}),";";
     			}
 
     			if (defined $self -> {ANNO} -> {$id}){
