@@ -14,7 +14,7 @@ sensitive=sensitive.nc.bed
 conserved=ultra.conserved.hg19.bed
 
 #### Genome annotations ####
-encode_annotation=ENCODE.annotation.gz
+encode_annotation=new_ENCODE.gz
 
 #### Bound motif file ####
 bound_motif=ENCODE.tf.bound.union.bed.gz
@@ -23,7 +23,7 @@ bound_motif=ENCODE.tf.bound.union.bed.gz
 hot_file=hot_region.bed
 
 #### Enhancer-gene pairs #####
-enhancer=drm.gene.bed
+enhancer=drm.gene.new.bed
 
 #### Motif PWM file ####
 motif_pfm=motif.PFM
