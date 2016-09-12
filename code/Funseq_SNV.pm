@@ -797,7 +797,7 @@ sub gene_link{
 					}
 				}
 				my $tmp_hub = $gene.":".join('',@prob_gene);
-				$self->{HUB} -> {$id} -> {$tmp_hub}=1;
+				$self->{NHUB} -> {$id} -> {$tmp_hub}=1;
 			}
 		}
 	}
@@ -1121,11 +1121,11 @@ exit;
 				$tmp_score =~ s/value/$self->{GERP}->{$id}/;	
 				$score +=eval($tmp_score);
     		}
-    		if (defined $self ->{NGENE} -> {$id} && (defined $self ->{HUB} -> {$id}) != 1 && (defined $self ->{MOTIFG}->{$id}) !=1){
+    		if (defined $self ->{NGENE} -> {$id} && (defined $self ->{NHUB} -> {$id}) != 1 && (defined $self ->{MOTIFG}->{$id}) !=1){
     			$score += $weight{NGENE};
     		}
-			if (defined $self ->{HUB} ->{$id}){
-				my $tmp_score = $weight{HUB};
+			if (defined $self ->{NHUB} ->{$id}){
+				my $tmp_score = $weight{NHUB};
 				$tmp_score =~ s/value/$self->{NET_PROB}->{$id}/;	
 				$score +=eval($tmp_score);
 			}
@@ -1166,7 +1166,7 @@ exit;
     		if (defined $self -> {HOT} -> {$id}){
     			$score ++;
 			}
-			if (defined $self ->{HUB} ->{$id}){
+			if (defined $self ->{NHUB} ->{$id}){
 				if ($self ->{NET_PROB} -> {$id} > 0.75){
 					$score ++;
 				}
@@ -1280,8 +1280,8 @@ exit;
     			print OUT $self -> {GERP} -> {$id},";";
     			print OUT "No;.;";
 
-    			if (defined $self -> {HUB} -> {$id}){
-    				print OUT join(",",sort keys %{$self -> {HUB} -> {$id}}),";";
+    			if (defined $self -> {NHUB} -> {$id}){
+    				print OUT join(",",sort keys %{$self -> {NHUB} -> {$id}}),";";
     			}else{
     				print OUT ".;";
     			}
@@ -1435,8 +1435,8 @@ exit;
     			print OUT "GERP=",$self -> {GERP}->{$id},";";
     			
     			print OUT "CDS=No;";
-    			if (defined $self -> {HUB} -> {$id}){
-    				print OUT "HUB=",join(",", sort keys %{$self -> {HUB} -> {$id}}),";";
+    			if (defined $self -> {NHUB} -> {$id}){
+    				print OUT "HUB=",join(",", sort keys %{$self -> {NHUB} -> {$id}}),";";
     			}
     			if (defined $self -> {ANNO} -> {$id}){
     				print OUT "NCENC=",join(",", sort keys %{$self -> {ANNO}->{$id}}),";";
