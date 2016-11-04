@@ -3,15 +3,10 @@ Most of these tools are updated on regular basis and we recommend users to insta
 
 1.	bedtools (version bedtools-2.25.0) (Quinlan, 2014) https://github.com/arq5x/bedtools2/releases/download/v2.25.0/bedtools-2.25.0.tar.gz
 2.	tabix (version tabix-0.2.6) https://sourceforge.net/projects/samtools/files/tabix/
-3.	VAT(version 2.0.1): http://vat.gersteinlab.org/download.php begg (Habegger et al., 2012). VAT installation step can be skipped if a user is only interested in non-coding variants. 
-4.	TFMpvalue-sc2pv
- http://bioinfo.lifl.fr/TFM/TFMpvalue/
-
-5.	bigWigAverageOverBed
- http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/	
-
+3.	VAT(version 2.0.1) http://vat.gersteinlab.org/download.php begg (Habegger et al., 2012). VAT installation step can be skipped if a user is only interested in non-coding variants. 
+4.	TFMpvalue-sc2pv http://bioinfo.lifl.fr/TFM/TFMpvalue/
+5.	bigWigAverageOverBed http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/	
 6.	R package (version 3.3.1).
 https://www.r-project.org. R is required for differential gene expression analysis (see Basic Protocol 3 for details)
-
 7.	Perl package Parallel::ForkManager
 http://search.cpan.org/~yanick/Parallel-ForkManager-1.17/lib/Parallel/ForkManager.pm. This package is required for parallel run of the codes. User should install Perl5 or above versions.
