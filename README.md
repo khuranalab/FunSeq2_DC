@@ -1,3 +1,4 @@
+FunSeq2 is a tool to prioritize and annotate somatic variants from cancer whole genome sequencing. It uses a pre-built data context, which is generated from different genomic and cancer resources and updated on regular basis. We provide latest FunSeq2 scripts (with bug fixes) and updated data context. 
 # FunSeq2 Pre-built data context
 1. FunSeq2_DC3 refers to FunSeq2 pre-built data context 3. It contains PCAWG OCT-2016 annotations 
 2. FunSeq2_DC2 refers to FunSeq2 pre-built data context 2. It contains PCAWG OCT-2015 annotations
@@ -6,9 +7,10 @@
 Pre-built data context sources
 FunSeq2_DC3  (http://khuranalab.med.cornell.edu/data_DC3.html)
 FunSeq2_DC2  (http://khuranalab.med.cornell.edu/data.html)
-FunSeq2-1.0  (http://funseq2.gersteinlab.org/data/2.1.0) 
+FunSeq2-1.0  (http://funseq2.gersteinlab.org/data/2.1.0)(http://khuranalab.med.cornell.edu/data.html) 
 
-##### FunSeq2 modifications:
+##### FunSeq2 modifications ############
+
 5. Fix new spliceOverlap annotations from VAT
 
 4. Map current terms to sequence ontology terms
