@@ -10,3 +10,5 @@ Most of these tools are updated on regular basis and we recommend users to insta
 https://www.r-project.org. R is required for differential gene expression analysis (see Basic Protocol 3 for details)
 7.	Perl package Parallel::ForkManager
 http://search.cpan.org/~yanick/Parallel-ForkManager-1.17/lib/Parallel/ForkManager.pm. This package is required for parallel run of the codes. User should install Perl5 or above versions.
+
+Link to download FunSeq2 dependencies khuranalab.med.cornell.edu/FunSeq_data/FunSeq2_dependencies.tar.gz 
