@@ -1,4 +1,4 @@
-Download FunSeq2_DC4 pre-built data context from below link
+Download FunSeq2_DC4 pre-built data context from below link. The data context contains annotations from PCAWG OCT 2016.
 http://khuranalab.med.cornell.edu/data_DC4.html
 
 Download FunSeq2_DC3 pre-built data context from below link and put them under context_data folder
