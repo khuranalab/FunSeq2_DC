@@ -26,5 +26,5 @@ Pre-built data context sources
 
 ## References 
 1.	Dhingra, P., Fu, Y., Gerstein, M. & Khurana, E. Using FunSeq2 for Coding and Non-Coding Variant Annotation and Prioritization. [Curr. Protoc. Bioinforma. 57, 15.11.1-15.11.17 (2017).](https://currentprotocols.onlinelibrary.wiley.com/doi/full/10.1002/cpbi.23)
-2.	Khurana, E. et al. Integrative annotation of variants from 1092 humans: application to cancer genomics. [Sci. 342, 1235587 (2013).](http://science.sciencemag.org/content/342/6154/1235587.full)
+2.	Khurana, E. et al. Integrative annotation of variants from 1092 humans: application to cancer genomics. [Science. 342(6154):1235587 (2013).](http://science.sciencemag.org/content/342/6154/1235587.full)
 3.	Fu, Y. et al. FunSeq2: A framework for prioritizing noncoding regulatory variants in cancer. [Genome Biology 15, (2012).](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0480-5)
