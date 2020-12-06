@@ -5,7 +5,7 @@
 - Download the docker desktop for your operating system
 
 #### 2. Download the data context files:
-- Funseq2 requires data context files which can be obtained from http://funseq2.gersteinlab.org/data/2.1.2
+- Funseq2 requires data context files which can be obtained from https://khuranalab.med.cornell.edu/data_DC3.html
 
 
 #### 3. Load the docker image:
